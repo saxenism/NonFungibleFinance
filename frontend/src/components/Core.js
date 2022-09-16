@@ -1,4 +1,4 @@
-import React              from 'react';
+import React, {useState, useEffect} from 'react';
 import { ethers         } from 'ethers';
 import { EventEmitter   } from 'fbemitter';
 
@@ -25,15 +25,17 @@ const Core = () => {
 		window.ethereum.on('accountsChanged', (address) => setSigner(_provider.getSigner(address)));
 	};
 
-	React.useEffect(setup, []);
+	useEffect(() => {
+		setup()
+	}, []);
 
-	React.useEffect(() => {
-		config?.factory &&  emitter.emit('Notify', 'success', `Connected to ${config.name}`);
-	}, [ emitter, config ]);
+	// React.useEffect(() => {
+	// 	config?.factory &&  emitter.emit('Notify', 'success', `Connected to ${config.name}`);
+	// }, [ emitter, config ]);
 
-	React.useEffect(() => {
-		console.info({ chain: config?.name, address: signer?._address })
-	}, [ config, signer ])
+	// React.useEffect(() => {
+	// 	console.info({ chain: config?.name, address: signer?._address })
+	// }, [ config, signer ])
 
 	return <>
 		<Notifications emitter={emitter}/>
